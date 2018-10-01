@@ -21,7 +21,7 @@
 			{% for membership in group.memberships %}
 				<tr>
 					<td>{{ loop.index }}</td>
-					<td>{{ membership.user.full_name }}</td>
+                    <td><a href="{{ url_for('views.get_user', id=membership.user.id) }}">{{ membership.user.full_name }}</a></td>
 					<td>{{ membership.user.score }}</td>
 				</tr>
 			{% endfor %}
