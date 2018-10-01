@@ -1,0 +1,38 @@
+{% extends "layout.html.j2" %}
+{% block page %}Top{% endblock %}
+{% block content %}
+<section class="hero">
+	<div class="hero-body">
+		<div class="container">
+			<h1 class="title">{{ group.name }}</h1>
+			<h2 class="subtitle">{{ group.description }}</h2>
+		</div>
+	</div>
+</section>
+<section class="section">
+    <div class="container">
+        <a class="button" href="{{ url_for('groups.add_user', id=group.id) }}">Add User</a>
+        <a class="button" href="{{ url_for('groups.report_user', group_id=group.id) }}">Report Posery</a>
+    </div>
+</section>
+<section class="section">
+	<div class="container">
+		<table class="table">
+			<thead>
+				<th>Ranking</th>
+				<th>Name</th>
+				<th>Score</th>
+			</thead>
+			<tbody>
+			{% for user in group.sorted_users() %}
+				<tr>
+					<td>{{ loop.index }}</td>
+                    <td><a href="{{ url_for('views.get_user', id=user.id) }}">{{ user.full_name }}</a></td>
+					<td>{{ user.score(group) }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</section>
+{% endblock %}

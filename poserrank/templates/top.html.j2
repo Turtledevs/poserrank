@@ -22,7 +22,7 @@
 				<tr>
 					<td>{{ loop.index }}</td>
 					<td>{{ user.full_name }}</td>
-					<td>{{ user.score }}</td>
+					<td>{{ user.score() }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

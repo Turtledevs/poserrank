@@ -10,6 +10,11 @@
 	</div>
 </section>
 <section class="section">
+    <div class="container">
+        <a class="button" href="{{ url_for('groups.new') }}">New Group</a>
+    </div>
+</section>
+<section class="section">
 	<div class="container">
 		<table class="table">
 			<thead>
@@ -17,10 +22,10 @@
 				<th>Description</th>
 			</thead>
 			<tbody>
-			{% for group in groups %}
+			{% for membership in user.memberships %}
 				<tr>
-					<td>{{ group.name }}</td>
-					<td>{{ group.description }}</td>
+                    <td><a href="{{ url_for('groups.index', id=membership.group.id) }}">{{ membership.group.name }}</a></td>
+					<td>{{ membership.group.description }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>
