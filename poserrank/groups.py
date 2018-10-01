@@ -116,7 +116,7 @@ def report_user(group_id):
 							timestamp=datetime.utcnow())
 			db.session.add(report)
 			db.session.commit()
-			return redirect(url_for('groups.index'))
+			return redirect(url_for('groups.index', id=group.id))
 
 	else:
 		return 'Authentication failure', 403

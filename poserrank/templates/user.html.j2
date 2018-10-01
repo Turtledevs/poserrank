@@ -53,7 +53,7 @@
                     <tr>
                         <td>{{ membership.group.name }}</td>
                         <td>{{ membership.group.description }}</td>
-                        <td>{{ membership.score }}</td>
+                        <td>{{ user.score(membership.group) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

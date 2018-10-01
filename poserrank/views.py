@@ -17,8 +17,8 @@ def index():
 
 @views.route('/top/')
 def top():
-	users = User.query.all() # connect to the database and retrieve all posers
-	return render_template('top.html.j2', users=users) # render the 'top' template, with posers as a local variable passed into the template
+	users = User.query.all() # connect to the database and retrieve all users
+	return render_template('top.html.j2', users=sorted(users, key=lambda x: x.score(), reverse=True)) # render the 'top' template, with users as a local variable passed into the template
 
 # web browsers initially request this page with GET; after the user has filled
 # out the form, the 'sign in' button makes a POST request to the same endpoint,

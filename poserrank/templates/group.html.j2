@@ -10,6 +10,12 @@
 	</div>
 </section>
 <section class="section">
+    <div class="container">
+        <a class="button" href="{{ url_for('groups.add_user', id=group.id) }}">Add User</a>
+        <a class="button" href="{{ url_for('groups.report_user', group_id=group.id) }}">Report Posery</a>
+    </div>
+</section>
+<section class="section">
 	<div class="container">
 		<table class="table">
 			<thead>
@@ -18,11 +24,11 @@
 				<th>Score</th>
 			</thead>
 			<tbody>
-			{% for membership in group.memberships %}
+			{% for user in group.sorted_users() %}
 				<tr>
 					<td>{{ loop.index }}</td>
-                    <td><a href="{{ url_for('views.get_user', id=membership.user.id) }}">{{ membership.user.full_name }}</a></td>
-					<td>{{ membership.user.score }}</td>
+                    <td><a href="{{ url_for('views.get_user', id=user.id) }}">{{ user.full_name }}</a></td>
+					<td>{{ user.score(group) }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

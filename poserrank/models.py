@@ -14,8 +14,17 @@ class User(db.Model):
 
 	memberships = db.relationship('Membership', back_populates='user')
 
-#	sent_invitations = db.relationship('Invitations')
-#	recieved_invitations = db.relationship('Invitations')
+	# if no group is specified, global score is returned
+	def score(self, group=None):
+		sum = 0
+		if group:
+			searched_memberships = Membership.query.filter(Membership.user == self).filter(Membership.group == group)
+		else:
+			searched_memberships = self.memberships
+		for membership in searched_memberships:
+			for report in membership.reports:
+				sum += report.score_change
+		return sum
 
 	def serializeable(self):
 		return {
@@ -38,6 +47,7 @@ class Membership(db.Model):
 
 	user = db.relationship('User', foreign_keys=[user_id], back_populates='memberships')
 	group = db.relationship('Group', foreign_keys=[group_id], back_populates='memberships')
+	reports = db.relationship('Report', back_populates='membership')
 
 	def serializeable(self):
 		return {
@@ -58,6 +68,10 @@ class Group(db.Model):
 	description = db.Column(db.Text)
 
 	memberships = db.relationship('Membership', back_populates='group')
+
+	def sorted_users(self):
+		users = [m.user for m in self.memberships]
+		return sorted(users, key=lambda x: x.score(), reverse=True)
 
 	def serializeable(self):
 		return {
