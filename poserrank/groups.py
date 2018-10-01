@@ -26,14 +26,15 @@ def authenticate(user, group):
 			return True
 	return False
 
-@groups.route('/')
-def index():
-	if 'user' in session:
-		query = Group.query.all()
-		return render_template('groups.html.j2', groups=query)
-	else:
-		return redirect(url_for('views.index'))
 
+@groups.route('/<int:id>')
+def index(id):
+	try:
+		group = Group.query.filter(Group.id == id)[0]
+	except IndexError:
+		return 'Group does not exist', 404
+
+	return render_template('group.html.j2', group=group)
 
 @groups.route('/new', methods=['GET', 'POST'])
 def new():

@@ -1,11 +1,11 @@
 {% extends "layout.html.j2" %}
-{% block page %}Groups{% endblock %}
+{% block page %}Top{% endblock %}
 {% block content %}
 <section class="hero">
 	<div class="hero-body">
 		<div class="container">
-			<h1 class="title">Your Groups</h1>
-			<h2 class="subtitle">Check up on your groups, invite new members, and make new groups.</h2>
+			<h1 class="title">{{ group.name }}</h1>
+			<h2 class="subtitle">{{ group.description }}</h2>
 		</div>
 	</div>
 </section>
@@ -13,14 +13,16 @@
 	<div class="container">
 		<table class="table">
 			<thead>
+				<th>Ranking</th>
 				<th>Name</th>
-				<th>Description</th>
+				<th>Score</th>
 			</thead>
 			<tbody>
-			{% for membership in user.memberships %}
+			{% for membership in group.memberships %}
 				<tr>
-					<td>{{ membership.group.name }}</td>
-					<td>{{ membership.group.description }}</td>
+					<td>{{ loop.index }}</td>
+					<td>{{ membership.user.full_name }}</td>
+					<td>{{ membership.user.score }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

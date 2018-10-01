@@ -76,6 +76,14 @@ def patch_user(id):
 		return 'Message received'
 	return 'Host invalid'
 
+@views.route('/users/<int:id>/groups')
+def user_groups(id):
+	try:
+		user = User.query.filter(User.id == id)[0]
+	except IndexError:
+		return 'User {} not found'.format(id), 404
+
+	return render_template('groups.html.j2', user=user)
 
 @views.route('/users/new', methods=['GET', 'POST'])
 def new_user():
