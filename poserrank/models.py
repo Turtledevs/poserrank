@@ -71,7 +71,7 @@ class Group(db.Model):
 
 	def sorted_users(self):
 		users = [m.user for m in self.memberships]
-		return sorted(users, key=lambda x: x.score(), reverse=True)
+		return sorted(users, key=lambda x: x.score(group=self), reverse=True)
 
 	def serializeable(self):
 		return {
