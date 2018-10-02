@@ -1,5 +1,9 @@
 {% extends "layout.html.j2" %}
 {% block page %}Report User{% endblock %}
+{% block head %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/autocomplete.js') }}"></script>
+{% endblock %}
 {% block content %}
 <div class="container">
 	<section class="hero">
@@ -18,7 +22,9 @@
                         <div class="field">
 							<label class="label">User</label>
 							<div class="control">
-								<input class="input" type="text" name="offender_name" placeholder="Text input">
+                                <input class="input autocomplete" type="text" name="offender_name" autocomplete="off" list="suggestions" group="{{ group.id }}">
+                                <datalist id="suggestions">
+                                </datalist>
 							</div>
 						</div>
 

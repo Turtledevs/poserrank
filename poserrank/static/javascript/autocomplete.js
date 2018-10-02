@@ -5,6 +5,7 @@ function Autobox(elem, apiSource) {
     this.apiSource = apiSource;
 
     this.datalist = document.getElementById(this.elem.getAttribute('list'));
+    this.group = this.elem.getAttribute('group');
 
     this.updateDropdown = function() {
         this.queryApi().then((response) => this.updateHTML(response))
@@ -25,6 +26,10 @@ function Autobox(elem, apiSource) {
     this.queryApi = function() {
         let form = new FormData();
         form.append('query', elem.value);
+        // if this textbox is associated with a particular group, add that query parameter
+        if(this.group) {
+            form.append('group', this.group);
+        }
         return fetch(this.apiSource, {method: 'POST', body: form})
             .then((response) => response.json())
     };
