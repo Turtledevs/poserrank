@@ -1,17 +1,19 @@
 "use strict";
 
-function Autobox(elem, apiSource) {
-    this.elem = elem;
-    this.apiSource = apiSource;
+class Autobox {
+    constructor(elem, apiSource) {
+        this.elem = elem;
+        this.apiSource = apiSource;
 
-    this.datalist = document.getElementById(this.elem.getAttribute('list'));
-    this.group = this.elem.getAttribute('group');
+        this.datalist = document.getElementById(this.elem.getAttribute('list'));
+        this.group = this.elem.getAttribute('group');
+    }
 
-    this.updateDropdown = function() {
+    updateDropdown() {
         this.queryApi().then((response) => this.updateHTML(response))
     };
 
-    this.updateHTML = function(suggestions) {
+    updateHTML(suggestions) {
         // remove all existing nodes
         while(this.datalist.firstChild) {
             this.datalist.removeChild(this.datalist.firstChild);
@@ -23,9 +25,9 @@ function Autobox(elem, apiSource) {
         }
     };
 
-    this.queryApi = function() {
+    queryApi() {
         let form = new FormData();
-        form.append('query', elem.value);
+        form.append('query', this.elem.value);
         // if this textbox is associated with a particular group, add that query parameter
         if(this.group) {
             form.append('group', this.group);
