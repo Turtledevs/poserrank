@@ -1,6 +1,9 @@
 {% extends "layout.html.j2" %}
 {% block page %}Add user{% endblock %}
-{% block script_src %}src="../static/javascript/newuser.js"{% endblock %}
+{% block head %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/autocomplete.js') }}"></script>
+{% endblock %}
 {% block content %}
 
 <div class="container">
@@ -18,7 +21,9 @@
 						<div class="field">
 							<label class="label">Username</label>
 							<div class="control">
-								<input class="input" type="text" name="username">
+								<input class="input autocomplete" type="text" name="username" autocomplete="off" list="suggestions">
+                                <datalist id="suggestions">
+                                </datalist>
 							</div>
 						</div>
                         <div class="field">
