@@ -9,9 +9,11 @@ from poserrank.groups import groups
 def app_factory(debug=False, test=False):
 	app = Flask(__name__)
 
+	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 	# in test, config happens in tests/fixures.py
 	if test:
-		pass
+		app.config.from_pyfile('configs/testconfig.py')
 
 	elif debug:
 		app.config.from_pyfile('configs/devconfig.py')
