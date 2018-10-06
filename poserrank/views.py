@@ -15,7 +15,7 @@ views = Blueprint('views', __name__)
 def index():
 	return render_template('index.html.j2')
 
-@views.route('/top/')
+@views.route('/top')
 def top():
 	users = User.query.all() # connect to the database and retrieve all users
 	return render_template('top.html.j2', users=sorted(users, key=lambda x: x.score(), reverse=True)) # render the 'top' template, with users as a local variable passed into the template
@@ -23,7 +23,7 @@ def top():
 # web browsers initially request this page with GET; after the user has filled
 # out the form, the 'sign in' button makes a POST request to the same endpoint,
 # this time with the login credentials stored in the request
-@views.route('/login/', methods=['GET', 'POST'])
+@views.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'GET': # just serve the login page if it's a GET request
 		return render_template('login.html.j2')
@@ -37,13 +37,13 @@ def login():
 				session['user_id'] = user.id  # sloppy hack -- needs to be fixed later
 				return redirect(url_for('views.index'))
 			else:
-				return 'wrong password'
+				return 'wrong password', 401
 
 		else:
-			return request.form['username'] + ' does not exist'
+			return request.form['username'] + ' does not exist', 404
 
 
-@views.route('/logout/')
+@views.route('/logout')
 def logout():
 	session.clear()
 	return redirect(url_for('views.index'))
