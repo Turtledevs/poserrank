@@ -10,6 +10,7 @@ def client():
 	app = app_factory(test=True)
 	db_fd, app.config['DATABASE'] = tempfile.mkstemp()
 	app.config['TESTING'] = True
+	app.config['SECRET_KEY'] = 'testkey'
 	client = app.test_client()
 
 	with app.app_context():
