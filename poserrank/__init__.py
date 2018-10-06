@@ -6,9 +6,14 @@ from poserrank.api import api
 from poserrank.views import views
 from poserrank.groups import groups
 
-def app_factory(debug=False):
+def app_factory(debug=False, test=False):
 	app = Flask(__name__)
-	if debug:
+
+	# in test, config happens in tests/fixures.py
+	if test:
+		pass
+
+	elif debug:
 		app.config.from_pyfile('configs/devconfig.py')
 		try:
 			app.config.from_pyfile('configs/keys.py')
