@@ -1,4 +1,5 @@
 from poserrank.shared import db
+import itertools
 
 
 class User(db.Model):
@@ -70,8 +71,15 @@ class Group(db.Model):
 	memberships = db.relationship('Membership', back_populates='group')
 
 	def sorted_users(self):
+		"""Users, sorted by score"""
 		users = [m.user for m in self.memberships]
 		return sorted(users, key=lambda x: x.score(group=self), reverse=True)
+
+
+	def sorted_reports(self):
+		"""Reports, sorted by time"""
+		reports = itertools.chain(*[m.reports for m in self.memberships])
+		return sorted(reports, key=lambda x: x.timestamp)
 
 	def serializeable(self):
 		return {

@@ -1,5 +1,9 @@
 {% extends "layout.html.j2" %}
 {% block page %}Top{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/group.css') }}">
+{% endblock %}
 {% block content %}
 <section class="hero">
 	<div class="hero-body">
@@ -17,22 +21,37 @@
 </section>
 <section class="section">
 	<div class="container">
-		<table class="table">
-			<thead>
-				<th>Ranking</th>
-				<th>Name</th>
-				<th>Score</th>
-			</thead>
-			<tbody>
-			{% for user in group.sorted_users() %}
-				<tr>
-					<td>{{ loop.index }}</td>
-                    <td><a href="{{ url_for('views.get_user', id=user.id) }}">{{ user.full_name }}</a></td>
-					<td>{{ user.score(group) }}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+        <div class="columns">
+            <div class="column is-one-third">
+                <h1>Members</h1>
+                <table class="table">
+                    <thead>
+                        <th>Ranking</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </thead>
+                    <tbody>
+                    {% for user in group.sorted_users() %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><a href="{{ url_for('views.get_user', id=user.id) }}">{{ user.full_name }}</a></td>
+                            <td>{{ user.score(group) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="column is-two-thirds">
+                <h2 class="title">Feed</h2>
+                {% for report in group.sorted_reports() %}
+                    <div class="box">
+                        <h1 class="report-title">{{ report.reporter.username }} reported {{ report.membership.user.username }}</h1>
+                        <h2 class="report-subtitle">for {{ report.score_change }} points at {{ report.timestamp }}</h2>
+                        <p>{{ report.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 	</div>
 </section>
 {% endblock %}
