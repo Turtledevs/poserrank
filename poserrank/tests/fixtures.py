@@ -14,3 +14,16 @@ def client():
 		db.create_all()
 
 	yield client
+
+
+@pytest.fixture
+def auth_client(client):
+	"""a logged-in client"""
+	new_user_response = client.post('/users/new', data=dict(username='testusername',
+															full_name='Test User',
+															email='testuser@mail.com',
+															password='Testpass123'))
+	login_response = client.post('/login', data=dict(username='testusername',
+													 password='Testpass123'))
+
+	yield client
