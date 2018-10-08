@@ -53,7 +53,7 @@ def new():
 			db.session.add(group)
 			db.session.add(first_membership)
 			db.session.commit()
-			return redirect(url_for('views.index'))
+			return redirect(url_for('groups.index', id=group.id))
 
 	else:
 		return redirect(url_for('views.index'))
@@ -85,7 +85,7 @@ def add_user(id):
 										is_owner=('is_owner' in request.form))
 				db.session.add(membership)
 				db.session.commit()
-				return redirect(url_for('views.index'))
+				return redirect(url_for('groups.index', id=group.id))
 
 		else:
 			return 'You are not an owner of this group', 403
