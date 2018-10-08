@@ -1,0 +1,13 @@
+.report-title {
+    margin-top: -10px;
+    font-size: 30px;
+}
+
+.report-date {
+    font-size: 20px;
+    color: #888;
+}
+
+.report-description {
+    font-size: 20px;
+}
